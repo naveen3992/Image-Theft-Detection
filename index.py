@@ -5,6 +5,9 @@ import argparse
 import shelve
 import glob
 import pdb 
+import numpy as np
+import vptree
+import time
 
 def arguementinitializer():
     # construct the argument parse and parse the arguments
@@ -27,7 +30,13 @@ def find1digit(num):
     return i
 
 def findHammingDistance(hash1, hash2):
-    output = int(hash1,16) ^ int(hash2,16)
+    #print hash2;
+    #print type(hash1)
+    #print 'called once'
+    #time.sleep(10000);
+    a = int(str(hash1),16)
+    b = int(str(hash2),16)
+    output = a ^ b
     return find1digit(output)
 
 # open the shelve database
@@ -76,6 +85,7 @@ def findNearbyImage(imageFolder, databasefolder, imagepath, hamdist):
     query = Image.open(imagepath)
     h = str(imagehash.phash(query))
     klist = db.keys() # a list of all existing keys (slow!)
+
     for k in klist:
         dist = findHammingDistance(h,k)
         print 'hamming distance = ', dist
@@ -90,6 +100,27 @@ def findNearbyImage(imageFolder, databasefolder, imagepath, hamdist):
             # close the shelve database
     db.close()
 
+def findNearbyImageVPTree(imageFolder, databasefolder, imagepath, hamdist):
+    # open the shelve database
+    db = shelve.open(databasefolder)
+    # load the query image, compute the difference image hash, and
+    # and grab the images from the database that have the same hash
+    # value
+    query = Image.open(imagepath)
+    h = str(imagehash.phash(query))
+    klist = db.keys() # a list of all existing keys (slow!)
+    print type(klist[0])
+    tree = vptree.VPTree(klist, findHammingDistance)
+    # Get all points within certain distance.
+    inrangeelments =tree.get_all_in_range(query, int(hamdist))
+    inrangeelments = []
+    if(len(inrangeelments)>0):
+        filenames = db[str(inrangeelments[0])]
+        for filename in filenames:
+            image = Image.open(imageFolder + "/" + filename)
+            image.show()
+            # close the shelve database
+    db.close()
 
 args = arguementinitializer()
 if args["fname"] == "create_indices" :
@@ -98,3 +129,5 @@ elif args["fname"] == "findDuplicateImage" :
     findDuplicateImage(args["dataset"],args["shelve"], args["query"])
 elif args["fname"] == "findNearbyImage" : 
     findNearbyImage(args["dataset"],args["shelve"], args["query"],args["radius"])
+elif args["fname"] == "findNearbyImageVPTree" : 
+    findNearbyImageVPTree(args["dataset"],args["shelve"], args["query"],args["radius"])
