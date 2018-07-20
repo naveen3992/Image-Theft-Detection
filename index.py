@@ -23,7 +23,7 @@ def find1digit(num):
     i=0
     while num>0:
         i = i+1
-        num = num/10
+        num = num & (num-1)
     return i
 
 def findHammingDistance(hash1, hash2):
