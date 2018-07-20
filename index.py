@@ -25,7 +25,7 @@ def create_indices(imageth,databasepath):
     for imagePath in glob.glob(imageth + "/*.jpg"):
         # load the image and compute the difference hash
         image = Image.open(imagePath)
-        h = str(imagehash.dhash(image))
+        h = str(imagehash.phash(image)) #navkuma -  changed from dhash to phash 
 
         # extract the filename from the path and update the database
         # using the hash as the key and the filename append to the
@@ -44,7 +44,7 @@ def findDuplicateImage(imageFolder, databasefolder, imagepath):
     # and grab the images from the database that have the same hash
     # value
     query = Image.open(imagepath)
-    h = str(imagehash.dhash(query))
+    h = str(imagehash.phash(query)) #navkuma - changed from dhash to phash
     filenames = db[h]
     print "Found %d images" % (len(filenames))
     # loop over the images
