@@ -1,0 +1,13 @@
+python indexVPTree.py -f create_indices -d /Users/sunilku/Desktop/hackathon/allImagesinone -s /Users/sunilku/Desktop/hackathon/
+
+
+python /Users/sunilku/Documents/GitHub/Image-Theft-Detection/indexVPTree.py -f findNearbyImageVPTree -d /Users/sunilku/Desktop/hackathon/allImagesinone/ -s /Users/sunilku/Desktop/hackathon/ -q /Users/sunilku/Desktop/hackathon/blur/damien_hirst.bmp -r 20
+
+python /Users/sunilku/Documents/GitHub/Image-Theft-Detection/indexVPTree.py -f findNearbyImageVPTree -d /Users/sunilku/Desktop/hackathon/allImagesinone/ -s /Users/sunilku/Desktop/hackathon/ -q /Users/sunilku/Desktop/hackathon/rotd/damien_hirst.bmp -r 20
+
+python /Users/sunilku/Documents/GitHub/Image-Theft-Detection/indexVPTree.py -f findNearbyImageVPTree -d /Users/sunilku/Desktop/hackathon/allImagesinone/ -s /Users/sunilku/Desktop/hackathon/ -q /Users/sunilku/Desktop/hackathon/compr/damien_hirst.jpg -r 20
+
+python indexVPTree.py -f create_indices -d /Users/sunilku/Desktop/hackathon/inputData/ -s /Users/sunilku/Desktop/hackathon/
+
+python /Users/sunilku/Documents/GitHub/Image-Theft-Detection/indexVPTree.py -f findNearbyImageVPTree -d /Users/sunilku/Desktop/hackathon/inputData/ -s /Users/sunilku/Desktop/hackathon/ -q /Users/sunilku/Desktop/hackathon/testdata/filter/2.jpg -r 20
+
